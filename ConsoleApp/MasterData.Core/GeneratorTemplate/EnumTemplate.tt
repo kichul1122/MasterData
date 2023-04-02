@@ -1,0 +1,16 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ output extension=".cs" #>
+
+namespace <#= Namespace #>
+{
+	public enum <#= ClassName #>
+	{
+		None = 0,
+<# foreach(var property in Properties) { #>
+		/// <summary>
+		/// <#= property.Comment #>
+		/// </summary>
+		<#= property.Name #> = <#= property.Value #>,
+<# } #>
+	}
+}

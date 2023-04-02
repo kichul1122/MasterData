@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConsoleAppFramework" Version="4.2.4" />
+    <PackageReference Include="Kokuban" Version="0.2.0" />
+    <PackageReference Include="UniTask" Version="2.3.3" />
+    <PackageReference Include="ZLogger" Version="1.7.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+	<Compile Include="..\..\DesignData\cs\**\*.cs">
+		<Link>cs\MasterData\cs\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+	</Compile>
+	
+	<Compile Include="..\..\DesignData\table\**\*.cs">
+		<Link>table\MasterData\cs\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+	</Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\MasterData.Core\MasterData.Core.csproj" />
+  </ItemGroup>
+
+</Project>

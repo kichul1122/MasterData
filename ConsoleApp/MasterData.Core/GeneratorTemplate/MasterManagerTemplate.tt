@@ -1,0 +1,53 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ output extension=".cs" #>
+
+using Cysharp.Threading.Tasks;
+using <#= Namespace #>.Tables;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace <#= Namespace #>
+{
+    public partial class <#= Name #>
+    {
+<# foreach(var item in Properties) { #><# if(item.DataType.Equals("MasterData")) { #>
+		public <#= item.Name #><#= MasterDataTable #> <#= item.Name #> => DB.<#= item.Name #><#= MasterDataTable #>;
+<# } #><# else if(item.DataType.Equals("Const")) { #>
+		public <#= item.Name #><#= MasterData #> <#= item.Name #> { get; private set; }
+<# } #>
+<# } #>
+
+		public async UniTask LoadAsync(string path, CancellationToken ct)
+		{
+			var builder = new DatabaseBuilder();
+
+			List<UniTask> tasks = new List<UniTask>(<#= Properties.Length #>)
+			{
+<# foreach(var item in Properties) { #><# if(item.DataType.Equals("MasterData")) { #>
+				UniTask.Create(async () => builder.Append(await LoadTableAsync<<#= item.Name #><#= MasterData #>>(path, nameof(<#= item.Name #>), ct))),
+<# } #><# else if(item.DataType.Equals("Const")) { #>
+				UniTask.Create(async () => <#= item.Name #> = await LoadConstAsync<<#= item.Name #><#= MasterData #>>(path, nameof(<#= item.Name #>), ct)),
+<# } #>
+<# } #>
+			};
+
+			await UniTask.WhenAll(tasks);
+
+			DB = new MemoryDatabase(builder.Build());
+		}
+
+		public async UniTask LoadSequentialAsync(string path, CancellationToken ct)
+		{
+			var builder = new DatabaseBuilder();
+
+<# foreach(var item in Properties) { #><# if(item.DataType.Equals("MasterData")) { #>
+				builder.Append(await LoadTableAsync<<#= item.Name #><#= MasterData #>>(path, nameof(<#= item.Name #>), ct));
+<# } #><# else if(item.DataType.Equals("Const")) { #>
+				<#= item.Name #> = await LoadConstAsync<<#= item.Name #><#= MasterData #>>(path, nameof(<#= item.Name #>), ct);
+<# } #>
+<# } #>
+
+			DB = new MemoryDatabase(builder.Build());
+		}
+    }
+}

@@ -1,0 +1,14 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ output extension=".cs" #>
+using MasterMemory;
+using MessagePack;
+
+namespace <#= Namespace #>
+{
+    public partial class <#= ClassName #>
+    {
+<# foreach(var item in Properties) { #>
+        public <#= item.DataType #> <#= item.Name #> { get; set; }
+<# } #>
+    }
+}

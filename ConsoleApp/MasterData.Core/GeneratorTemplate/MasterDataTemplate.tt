@@ -1,0 +1,18 @@
+﻿<#@ template debug="false" hostspecific="false" linePragmas="false" language="C#" #>
+<#@ output extension=".cs" #>
+using MasterMemory;
+using MessagePack;
+using System.Collections.Generic;
+
+namespace <#= Namespace #>
+{
+	[MemoryTable("<#= LowerClassName #>"), MessagePackObject(true)]
+    public partial class <#= ClassName #>
+    {
+<# foreach(var item in Properties) { #><# if(!string.IsNullOrWhiteSpace(item.Attribute)) { #>
+        <#= item.Attribute #> 
+<# } #>
+        public <#= item.DataType #> <#= item.Name #> { get; set; }
+<# } #>
+    }
+}
