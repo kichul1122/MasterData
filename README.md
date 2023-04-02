@@ -29,13 +29,13 @@
 * .mn : 테이블 데이터 New (같은 데이터지만 파일 분리를 위해 사용하고 .mb와 쌍을 이루고, 최신 데이터 입력용)
 * .mb : 테이블 데이터 Backup (같은 데이터지만 파일 분리를 위해 사용하고 .mb와 쌍을 이루고, 백업 데이터 입력용) 
 
-### 자료형(Data Type)
+## 자료형(Data Type)
 - int, long, float, double, string
 - List<X>
 
 List<X> 셀 입력시 구분자는 (,) 입니다.
 
-### 커스텀 클래스
+## 커스텀 클래스
 추가 요청은 클라이언트 개발자에게 (MasterData.Core 프로젝트 - ConvertorCore.cs 참고)
 - Customclass
 - List<Customclass>
@@ -43,7 +43,7 @@ List<X> 셀 입력시 구분자는 (,) 입니다.
 커스텀 클래스 셀 입력 형태 (X:X:X) 입니다.
 
 	
-### Attribute 및 API 는 https://github.com/Cysharp/MasterMemory 참고
+## Attribute 및 API 는 https://github.com/Cysharp/MasterMemory 참고
 * sample.xlsx 참고
 * [PrimaryKey] : 중복 아이디 불허용
 * [PrimaryKey, NonUnique] : 중복 아이디 허용
